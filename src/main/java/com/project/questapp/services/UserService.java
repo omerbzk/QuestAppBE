@@ -33,7 +33,7 @@ public class UserService {
             User userToUpdate = user.get();
             userToUpdate.setUserName(updatedUser.getUserName());
             userToUpdate.setPassword(updatedUser.getPassword());
-            userService.save(userToUpdate);
+            userRepository.save(userToUpdate);
             return userToUpdate;
         } else {
             return null;
