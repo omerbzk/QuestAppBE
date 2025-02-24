@@ -1,6 +1,7 @@
 package com.project.questapp.services;
 
 import com.project.questapp.dtos.requests.CommentCreateRequest;
+import com.project.questapp.dtos.requests.CommentUpdateRequest;
 import com.project.questapp.entities.Comment;
 import com.project.questapp.entities.Post;
 import com.project.questapp.entities.User;
@@ -56,4 +57,18 @@ public class CommentService {
     }
 
 
+    public Comment updateCommentById(Long commentId, CommentUpdateRequest commentUpdateRequest) {
+        Optional<Comment> comment = commentRepository.findById(commentId);
+        if (comment.isPresent()) {
+            Comment commentToUpdate = comment.get();
+            commentToUpdate.setText(commentUpdateRequest.getText());
+            return commentRepository.save(commentToUpdate);
+        } else {
+            return null;
+        }
+    }
+
+    public void deleteCommentById(Long commentId) {
+        commentRepository.deleteById(commentId);
+    }
 }
