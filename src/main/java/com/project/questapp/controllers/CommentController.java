@@ -1,6 +1,7 @@
 package com.project.questapp.controllers;
 
 import com.project.questapp.dtos.requests.CommentCreateRequest;
+import com.project.questapp.dtos.requests.CommentUpdateRequest;
 import com.project.questapp.entities.Comment;
 import com.project.questapp.services.CommentService;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,16 @@ public class CommentController {
     @PostMapping
     public Comment createComment(@RequestBody CommentCreateRequest commentCreateRequest) {
         return commentService.createComment(commentCreateRequest);
+    }
+
+    @PutMapping("/{commentId}")
+    public Comment updateComment(@PathVariable Long commentId, @RequestBody CommentUpdateRequest commentUpdateRequest) {
+        return commentService.updateCommentById(commentId, commentUpdateRequest);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable Long commentId) {
+        commentService.deleteCommentById(commentId);
     }
 
 }
