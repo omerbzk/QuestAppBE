@@ -2,6 +2,7 @@ package com.project.questapp.services;
 
 import com.project.questapp.dtos.requests.PostCreateRequest;
 import com.project.questapp.dtos.requests.PostUpdateRequest;
+import com.project.questapp.dtos.responses.PostResponse;
 import com.project.questapp.entities.Post;
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.PostRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -19,12 +21,13 @@ public class PostService {
         this.postRepository = postRepository;
         this.userService = userService;
     }
-    public List<Post> getAllPosts(Optional<Long> userId) {
+    public List<PostResponse> getAllPosts(Optional<Long> userId) {
+        List<Post> list;
         if (userId.isPresent()) {
-            return postRepository.findByUserId(userId.get());
-        } else {
-            return postRepository.findAll();
+            list = postRepository.findByUserId(userId.get());
         }
+        list = postRepository.findAll();
+        return list.stream().map(p -> new PostResponse(p)).collect(Collectors.toList());
     }
 
     public Post getPostById(Long postId) {
