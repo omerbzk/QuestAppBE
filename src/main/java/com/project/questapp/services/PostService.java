@@ -2,10 +2,14 @@ package com.project.questapp.services;
 
 import com.project.questapp.dtos.requests.PostCreateRequest;
 import com.project.questapp.dtos.requests.PostUpdateRequest;
+import com.project.questapp.dtos.responses.LikeResponse;
 import com.project.questapp.dtos.responses.PostResponse;
+import com.project.questapp.entities.Like;
 import com.project.questapp.entities.Post;
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.PostRepository;
+import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +21,25 @@ public class PostService {
     private PostRepository postRepository;
     private UserService userService;
 
-    public PostService(PostRepository postRepository, UserService userService) {
+    private LikeService likeService;
+
+    // @Lazy annotation is added because of circular references
+    public PostService(PostRepository postRepository, UserService userService,@Lazy LikeService likeService) {
         this.postRepository = postRepository;
         this.userService = userService;
+        this.likeService = likeService;
     }
+
     public List<PostResponse> getAllPosts(Optional<Long> userId) {
         List<Post> list;
         if (userId.isPresent()) {
             list = postRepository.findByUserId(userId.get());
         }
         list = postRepository.findAll();
-        return list.stream().map(p -> new PostResponse(p)).collect(Collectors.toList());
+        return list.stream().map(p -> {
+            List<LikeResponse> likes = likeService.getAllLikesWithParams(Optional.ofNullable(null), Optional.of(p.getId()));
+            return new PostResponse(p, likes);
+        }).collect(Collectors.toList());
     }
 
     public Post getPostById(Long postId) {
@@ -39,7 +51,6 @@ public class PostService {
         if (user == null)
             return null;
         Post toSave = new Post();
-        toSave.setId(newPostCreateRequest.getId());
         toSave.setText(newPostCreateRequest.getText());
         toSave.setTitle(newPostCreateRequest.getTitle());
         toSave.setUser(user);

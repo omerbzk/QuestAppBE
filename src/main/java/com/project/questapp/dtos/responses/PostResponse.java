@@ -1,6 +1,9 @@
 package com.project.questapp.dtos.responses;
 
+import com.project.questapp.entities.Like;
 import com.project.questapp.entities.Post;
+
+import java.util.List;
 
 public class PostResponse {
     Long id;
@@ -8,14 +11,16 @@ public class PostResponse {
     String userName;
     String title;
     String text;
+    List<LikeResponse> postLikes;
 
     // Constructor based mapper
-    public PostResponse(Post entity) {
+    public PostResponse(Post entity, List<LikeResponse> likes) {
         this.id = entity.getId();
         this.userId = entity.getUser().getId();
         this.userName = entity.getUser().getUserName();
         this.title = entity.getTitle();
         this.text = entity.getText();
+        this.postLikes = likes;
     }
 
     public PostResponse() {

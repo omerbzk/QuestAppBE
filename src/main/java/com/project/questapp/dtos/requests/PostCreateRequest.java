@@ -1,18 +1,9 @@
 package com.project.questapp.dtos.requests;
 
 public class PostCreateRequest {
-    Long id;
     String text;
     String title;
     Long userId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getText() {
         return text;

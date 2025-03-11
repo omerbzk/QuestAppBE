@@ -1,7 +1,6 @@
 package com.project.questapp.dtos.requests;
 
 public class CommentCreateRequest {
-    Long id;
     Long userId;
     Long postId;
     String text;
@@ -13,14 +12,6 @@ public class CommentCreateRequest {
         this.userId = userId;
         this.postId = postId;
         this.text = text;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getUserId() {
