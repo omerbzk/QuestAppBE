@@ -47,7 +47,6 @@ public class LikeService {
         Post post = postService.getPostById(likeCreateRequest.getPostId());
         if (user != null && post != null) {
             Like likeToSave = new Like();
-            likeToSave.setId(likeCreateRequest.getId());
             likeToSave.setUser(user);
             likeToSave.setPost(post);
             return likeRepository.save(likeToSave);
