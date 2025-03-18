@@ -38,10 +38,10 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody UserRequest loginRequest) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword());
-        AuthenticationManager auth = (AuthenticationManager) authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication((Authentication) auth);
-        String jwtToken = jwtTokenProvider.generateJwtToken((Authentication) auth);
-        return  "Bearer " + jwtToken;
+        Authentication auth = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        String jwtToken = jwtTokenProvider.generateJwtToken(auth);
+        return "Bearer " + jwtToken;
     }
 
     @PostMapping("/register")
