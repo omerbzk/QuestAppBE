@@ -31,17 +31,9 @@ public class JwtTokenProvider {
 
     boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJwt(token);
-            return isTokenExpired(token);
-        } catch (SignatureException e) {
-            return false;
-        } catch (MalformedJwtException e) {
-            return false;
-        }catch (ExpiredJwtException e) {
-            return false;
-        }catch (UnsupportedJwtException e) {
-            return false;
-        }catch (IllegalArgumentException e) {
+            Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
+            return !isTokenExpired(token);
+        } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             return false;
         }
     }
