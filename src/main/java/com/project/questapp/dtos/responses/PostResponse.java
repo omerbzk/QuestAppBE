@@ -27,12 +27,13 @@ public class PostResponse {
 
     }
 
-    public PostResponse(Long id, Long userId, String userName, String title, String text) {
+    public PostResponse(Long id, Long userId, String userName, String title, String text, List<LikeResponse> postLikes) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.title = title;
         this.text = text;
+        this.postLikes = postLikes;
     }
 
     public Long getId() {
@@ -73,5 +74,13 @@ public class PostResponse {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public List<LikeResponse> getPostLikes() {
+        return postLikes;
+    }
+
+    public void setPostLikes(List<LikeResponse> postLikes) {
+        this.postLikes = postLikes;
     }
 }
