@@ -1,6 +1,9 @@
 package com.project.questapp.services;
 
 import com.project.questapp.entities.User;
+import com.project.questapp.repos.CommentRepository;
+import com.project.questapp.repos.LikeRepository;
+import com.project.questapp.repos.PostRepository;
 import com.project.questapp.repos.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +13,19 @@ import java.util.Optional;
 @Service
 public class UserService {
     UserRepository userRepository;
+    LikeRepository likeRepository;
+    CommentRepository commentRepository;
+    PostRepository postRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public UserService(UserRepository userRepository, LikeRepository likeRepository, CommentRepository commentRepository, PostRepository postRepository) {
+        this.userRepository = userRepository;
+        this.likeRepository = likeRepository;
+        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
     }
 
     public List<User> getAllUsers() {
@@ -47,4 +60,11 @@ public class UserService {
     public User getUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
+
+//    public List<Object> getUserActivity(Long userId) {
+//        List<Long> postIds = postRepository.findTopByUserId(userId);
+//        if (postIds.isEmpty())
+//            return null;
+//
+//    }
 }

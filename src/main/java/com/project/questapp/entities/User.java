@@ -11,6 +11,16 @@ public class User {
     Long id;
     String userName;
     String password;
+    int avatar;
+
+    public User() {
+    }
+
+    public User(String userName, String password, int avatar) {
+        this.userName = userName;
+        this.password = password;
+        this.avatar = avatar;
+    }
 
     public Long getId() {
         return id;
@@ -34,5 +44,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(int avatar) {
+        this.avatar = avatar;
     }
 }

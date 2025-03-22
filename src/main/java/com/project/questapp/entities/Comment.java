@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -24,6 +26,19 @@ public class Comment {
     @Lob
     @Column(columnDefinition = "text")
     String text;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date createDate;
+
+    public Comment() {
+    }
+
+    public Comment(Post post, User user, String text) {
+        this.post = post;
+        this.user = user;
+        this.text = text;
+        this.createDate = new Date();
+    }
+
 
     public Long getId() {
         return id;
@@ -56,4 +71,13 @@ public class Comment {
     public void setText(String text) {
         this.text = text;
     }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
 }
